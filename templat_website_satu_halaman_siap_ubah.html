@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Foto Art Pekalongan</title>
+  <meta name="description" content="Foto Art Pekalongan — toko online foto digital berkualitas dari Pekalongan. Koleksi foto artistik, lisensi digital, dan paket komersial." />
+  <!--
+    Kode ini ditulis agar mudah dibaca dan mudah dikustomisasi.
+    Struktur: HTML semantik + CSS variabel untuk palet warna + sedikit JS untuk interaksi.
+  -->
+  <style>
+    :root{
+      /* Palet warna utama (ubah hex bila perlu) */
+      --primary:#1e40af;   /* biru (utama) */
+      --accent:#f59e0b;    /* kuning (aksen) */
+      --danger:#ef4444;    /* merah (aksen tambahan) */
+      --white:#ffffff;     /* putih untuk teks/ikon */
+      --bg:#071025;        /* latar gelap elegan */
+      --surface:#0b1220;   /* kartu */
+      --text:#e6eef9;      /* teks utama */
+      --muted:#98a7c6;     /* teks sekunder */
+      --ring:rgba(30,64,175,.18);
+      --radius:14px;
+      --shadow:0 10px 30px rgba(2,6,23,.5);
+      --maxw:1200px;
+    }
+
+    /* Reset dan aksesibilitas */
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:linear-gradient(180deg,var(--bg) 0%, #07192f 100%);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:var(--text);-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block;height:auto}
+
+    .container{max-width:var(--maxw);margin-inline:auto;padding:0 20px}
+
+    /* NAVBAR */
+    nav{position:sticky;top:0;z-index:60;background:linear-gradient(180deg,rgba(7,16,37,.9),rgba(7,16,37,.75));border-bottom:1px solid rgba(255,255,255,.03)}
+    .nav-wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:68px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700}
+    .logo{width:44px;height:44px;flex:0 0 44px;border-radius:10px;display:grid;place-items:center}
+    .brand-name{font-size:16px;letter-spacing:.2px}
+    .nav-links{display:flex;gap:18px}
+    .nav-links a{padding:8px 12px;border-radius:10px;color:var(--muted);font-weight:600}
+    .nav-links a:focus,.nav-links a:hover{color:var(--white);background:rgba(255,255,255,.03);outline:none}
+    .hamb{display:none;background:transparent;border:0}
+    @media(max-width:880px){
+      .hamb{display:block}
+      .nav-links{display:none;flex-direction:column;width:100%;margin-top:8px}
+      .nav-links.open{display:flex}
+    }
+
+    /* HERO */
+    header.hero{padding:72px 0 48px}
+    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}
+    @media(max-width:920px){.hero-grid{grid-template-columns:1fr}}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:rgba(30,64,175,.12);border:1px solid rgba(30,64,175,.18);color:var(--primary);font-size:13px}
+    h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:14px 0 10px}
+    .lead{color:var(--muted);font-size:16px;max-width:52ch}
+    .cta{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);color:var(--white);font-weight:700}
+    .btn.primary{background:linear-gradient(90deg,var(--primary),#153e9a);border:0}
+
+    .hero-card{background:linear-gradient(180deg,rgba(255,255,255,.02),transparent);border:1px solid rgba(255,255,255,.04);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+    .hero-preview{aspect-ratio:16/10;border-radius:10px;background:linear-gradient(120deg,rgba(30,64,175,.12),rgba(239,68,68,.06));display:grid;place-items:center}
+
+    /* SECTIONS */
+    section{padding:64px 0;border-top:1px solid rgba(255,255,255,.03)}
+    .section-title{font-size:26px;margin:0 0 8px}
+    .section-sub{color:var(--muted);margin:0 0 20px}
+
+    /* GALLERY CARDS */
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    @media(max-width:900px){.grid-3{grid-template-columns:1fr}}
+    .card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:12px}
+    .card img{border-radius:8px;object-fit:cover;height:220px}
+    .card h3{margin:0;font-size:16px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+
+    /* PRICING */
+    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    @media(max-width:900px){.pricing{grid-template-columns:1fr}}
+    .price{padding:20px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,.01),transparent);border:1px solid rgba(255,255,255,.04)}
+    .price .amt{font-size:22px;font-weight:800;margin:8px 0}
+
+    /* CONTACT */
+    form{display:grid;gap:12px}
+    input, textarea{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px 14px;color:var(--text);outline:none}
+    input:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 6px var(--ring)}
+
+    .footer{padding:28px 0;color:var(--muted);border-top:1px solid rgba(255,255,255,.03)}
+
+    /* utility */
+    .badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .badge{font-size:12px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04)}
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav aria-label="Main navigation">
+    <div class="container nav-wrap">
+      <a href="#home" class="brand" aria-label="Foto Art Pekalongan">
+        <div class="logo" aria-hidden="true">
+          <!-- Inline SVG logo: kamera + palet warna -->
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logoTitle">
+            <title id="logoTitle">Logo Foto Art Pekalongan</title>
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1">
+                <stop offset="0" stop-color="#1e40af"/>
+                <stop offset="0.6" stop-color="#f59e0b"/>
+                <stop offset="1" stop-color="#ef4444"/>
+              </linearGradient>
+            </defs>
+            <rect width="48" height="48" rx="10" fill="url(#g1)" opacity="0.12"/>
+            <g transform="translate(6,8)">
+              <rect x="2" y="4" width="28" height="20" rx="4" fill="#ffffff" opacity="0.06"/>
+              <circle cx="16" cy="14" r="6" fill="url(#g1)"/>
+              <rect x="0" y="0" width="6" height="6" rx="1" fill="#ffffff" opacity="0.14"/>
+            </g>
+          </svg>
+        </div>
+        <div class="brand-name">
+          <div style="font-weight:800;color:var(--white);">Foto Art Pekalongan</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Foto digital & lisensi</div>
+        </div>
+      </a>
+
+      <button class="hamb" id="hambBtn" aria-label="Buka menu" aria-expanded="false">☰</button>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#koleksi">Koleksi</a>
+        <a href="#paket">Paket</a>
+        <a href="#tentang">Tentang</a>
+        <a href="#kontak">Kontak</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="home" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="pill">Koleksi eksklusif dari Pekalongan</div>
+        <h1>Foto digital berkualitas untuk proyek kreatif & komersial</h1>
+        <p class="lead">Jual beli foto digital — lisensi personal, komersial, dan paket konten. Pilih, bayar, dan unduh langsung. Cocok untuk desainer, agensi, dan kreator konten.</p>
+        <div class="cta">
+          <a class="btn primary" href="#koleksi">Jelajahi Koleksi</a>
+          <a class="btn" href="#paket">Lihat Paket</a>
+        </div>
+        <div class="badge-row">
+          <span class="badge">📍 Pekalongan</span>
+          <span class="badge">⚡ Unduh instan</span>
+          <span class="badge">🔒 Lisensi aman</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-preview" aria-hidden="true">
+          <!-- Placeholder preview: ganti dengan slideshow/thumbnail nyata -->
+          <svg width="220" height="140" viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg">
+            <rect width="220" height="140" rx="8" fill="rgba(255,255,255,.03)"/>
+            <text x="110" y="74" fill="rgba(255,255,255,.25)" font-family="Inter,Arial" font-size="14" text-anchor="middle">Preview Koleksi</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- KOLEKSI (Galeri) -->
+  <section id="koleksi" aria-labelledby="koTitle">
+    <div class="container">
+      <h2 id="koTitle" class="section-title">Koleksi Unggulan</h2>
+      <p class="section-sub">Beberapa karya terbaik—klik untuk melihat detail dan lisensi.</p>
+      <div class="grid-3" id="gallery">
+        <!-- Contoh kartu; ganti src dengan file foto nyata -->
+        <article class="card" role="article">
+          <img src="https://via.placeholder.com/640x420.png?text=Foto+1" alt="Foto 1 - Pantai Pekalongan"/>
+          <h3>Pantai Pekalongan — Sunrise</h3>
+          <p>Ukuran besar, lisensi komersial tersedia. Rp75.000</p>
+          <div style="margin-top:auto"><a class="btn" href="#kontak">Beli / Detail</a></div>
+        </article>
+
+        <article class="card" role="article">
+          <img src="https://via.placeholder.com/640x420.png?text=Foto+2" alt="Foto 2 - Batik Traditional"/>
+          <h3>Batik Tradisional — Tekstur</h3>
+          <p>High-res, cocok untuk cetak & digital. Rp95.000</p>
+          <div style="margin-top:auto"><a class="btn" href="#kontak">Beli / Detail</a></div>
+        </article>
+
+        <article class="card" role="article">
+          <img src="https://via.placeholder.com/640x420.png?text=Foto+3" alt="Foto 3 - Jalan Kota"/>
+          <h3>Suasana Kota — Malam</h3>
+          <p>Lisensi personal & komersial. Rp65.000</p>
+          <div style="margin-top:auto"><a class="btn" href="#kontak">Beli / Detail</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAKET / HARGA -->
+  <section id="paket" aria-labelledby="pkTitle">
+    <div class="container">
+      <h2 id="pkTitle" class="section-title">Paket & Lisensi</h2>
+      <p class="section-sub">Pilih lisensi sesuai kebutuhan. Harga contoh bisa disesuaikan.</p>
+      <div class="pricing">
+        <div class="price">
+          <div class="tag">Personal</div>
+          <h3>Lisensi Personal</h3>
+          <div class="amt">Rp49.000</div>
+          <p class="section-sub">Untuk penggunaan pribadi dan non-komersial. Unduh instan.</p>
+          <a class="btn" href="#kontak">Pilih Lisensi</a>
+        </div>
+        <div class="price" style="outline:2px solid rgba(245,158,11,.12)">
+          <div class="tag">Komersial</div>
+          <h3>Lisensi Komersial</h3>
+          <div class="amt">Rp195.000</div>
+          <p class="section-sub">Gunakan untuk produk, iklan, dan proyek bisnis.</p>
+          <a class="btn primary" href="#kontak">Pilih Lisensi</a>
+        </div>
+        <div class="price">
+          <div class="tag">Paket</div>
+          <h3>Paket Koleksi (10 foto)</h3>
+          <div class="amt">Rp799.000</div>
+          <p class="section-sub">Lisensi komersial untuk semua foto dalam paket. Diskon khusus.</p>
+          <a class="btn" href="#kontak">Diskusi Paket</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TENTANG -->
+  <section id="tentang">
+    <div class="container">
+      <h2 class="section-title">Tentang Foto Art Pekalongan</h2>
+      <p class="section-sub">Studio foto digital yang mengabadikan keindahan Pekalongan dan sekitarnya. Menyediakan file berkualitas tinggi dan lisensi yang jelas untuk penggunaan aman.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px">
+        <div class="card">
+          <h3>Profesional & Terpercaya</h3>
+          <p>Kami menyediakan foto dengan metadata jelas, bukti kepemilikan, dan opsi lisensi terperinci.</p>
+        </div>
+        <div class="card">
+          <h3>Pengiriman Digital</h3>
+          <p>Proses cepat: pemesanan → pembayaran → unduh. Bisa juga kirim link khusus untuk klien besar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAK -->
+  <section id="kontak">
+    <div class="container">
+      <h2 class="section-title">Hubungi & Pesan</h2>
+      <p class="section-sub">Isi formulir untuk pertanyaan lisensi, pembelian partai, atau request fotografi custom.</p>
+      <div style="display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:start">
+        <form id="contactForm" onsubmit="handleSubmit(event)">
+          <input required type="text" name="nama" placeholder="Nama lengkap" />
+          <input required type="email" name="email" placeholder="Email" />
+          <input type="text" name="telp" placeholder="Nomor WhatsApp (opsional)" />
+          <textarea required rows="5" name="pesan" placeholder="Tulis pesanan atau pertanyaan Anda"></textarea>
+          <div style="display:flex;gap:12px">
+            <button class="btn primary" type="submit">Kirim Pesan</button>
+            <button class="btn" type="button" onclick="copyEmail()">Salin Email</button>
+          </div>
+          <small id="formNote" style="color:var(--accent);display:block;margin-top:8px"></small>
+        </form>
+
+        <aside class="card" aria-label="Info kontak">
+          <h3>Kontak Langsung</h3>
+          <p class="section-sub">Ganti data ini dengan kontak resmi Anda.</p>
+          <p>📍 Pekalongan, Indonesia</p>
+          <p>✉️ <span id="emailAddr">hello@fotoartpekalongan.com</span></p>
+          <p>📱 +62 8xx-xxxx-xxxx</p>
+          <div class="badge-row"><span class="badge">Jam: 09.00–17.00</span></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container" style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+      <span>© <span id="year"></span> Foto Art Pekalongan</span>
+      <div style="display:flex;gap:12px">
+        <a href="#koleksi">Koleksi</a>
+        <a href="#paket">Paket</a>
+        <a href="#kontak">Kontak</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Tahun otomatis
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu toggle
+    const hambBtn = document.getElementById('hambBtn');
+    const navLinks = document.getElementById('navLinks');
+    hambBtn.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      hambBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    // Form handler (demo): simpan pesan ke LocalStorage dan tampilkan notifikasi.
+    function handleSubmit(e){
+      e.preventDefault();
+      const form = e.target;
+      const data = Object.fromEntries(new FormData(form).entries());
+      // Simpan lokal (contoh). Ganti dengan panggilan API/backend untuk produksi.
+      const messages = JSON.parse(localStorage.getItem('fa_messages') || '[]');
+      messages.push({time: new Date().toISOString(), ...data});
+      localStorage.setItem('fa_messages', JSON.stringify(messages));
+      document.getElementById('formNote').textContent = 'Terima kasih, ' + (data.nama || '') + '! Pesan Anda berhasil dikirim.';
+      form.reset();
+    }
+
+    function copyEmail(){
+      const email = document.getElementById('emailAddr').textContent;
+      navigator.clipboard?.writeText(email).then(()=>{
+        alert('Email disalin: ' + email);
+      }).catch(()=>{
+        alert('Salin manual: ' + email);
+      });
+    }
+  </script>
+</body>
+</html>
