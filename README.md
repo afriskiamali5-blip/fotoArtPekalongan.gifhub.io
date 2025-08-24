@@ -1,1 +1,1 @@
-# fotoArtPekalongan.gifhub.io
+# fotoArtPekalongan.github.io
